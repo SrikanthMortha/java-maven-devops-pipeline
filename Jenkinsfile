@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven 3.8.7' // Make sure this is configured under Global Tool Configuration
+        maven 'Maven_3.8.7'
     }
 
     stages {
@@ -14,13 +14,17 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                dir('devopsapp') {
+                    sh 'mvn clean package'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                junit '**/target/surefire-reports/*.xml'
+                dir('devopsapp') {
+                    junit '**/target/surefire-reports/*.xml'
+                }
             }
         }
     }
