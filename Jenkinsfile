@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/SrikanthMortha/java-maven-devops-pipeline.git'
+                git branch: 'main', url: 'https://github.com/SrikanthMortha/java-maven-devops-pipeline.git'
             }
         }
 
@@ -28,20 +28,19 @@ pipeline {
 
         stage('Push to DockerHub/Registry') {
             steps {
-                echo 'Push logic will be added once credentials are set.'
+                echo 'Pushing to DockerHub/Registry... (Coming soon)'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploy step pending Kubernetes/infra readiness.'
+                echo 'Deployment step placeholder'
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             junit 'target/surefire-reports/*.xml'
         }
     }
