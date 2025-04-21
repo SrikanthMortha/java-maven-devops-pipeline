@@ -9,6 +9,11 @@ pipeline {
         }
 
         stage('Build') {
+            agent {
+                docker {
+                    image 'maven:3.8.7-openjdk-17'
+                }
+            }
             steps {
                 sh 'mvn clean package'
             }
@@ -16,32 +21,8 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                junit '**/target/surefire-reports/*.xml'
             }
-        }
-
-        stage('Docker Build') {
-            steps {
-                sh 'docker build -t devopsapp:v1 .'
-            }
-        }
-
-        stage('Push to DockerHub/Registry') {
-            steps {
-                echo 'Pushing to DockerHub/Registry... (Coming soon)'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deployment step placeholder'
-            }
-        }
-    }
-
-    post {
-        always {
-            junit 'target/surefire-reports/*.xml'
         }
     }
 }
