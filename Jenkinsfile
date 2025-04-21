@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven 3.8.7' // Make sure this is configured under Global Tool Configuration
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -10,11 +14,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                script {
-                    docker.image('maven:3.8.7-openjdk-17').inside {
-                        sh 'mvn clean package'
-                    }
-                }
+                sh 'mvn clean package'
             }
         }
 
